@@ -1,6 +1,6 @@
 import random
 
-from lesson1.dataset import random_color, new_rect, new_tri
+from lesson1.dataset import random_color, new_rect, new_tri, mktr
 from lesson1.dataset import generate
 
 
@@ -14,7 +14,8 @@ def random_rect():
     angle = random.randint(0, 180)
     bk_col = random_color()
     fg_col = random_color()
-    return new_rect((iw, ih), w, h, (tx, ty), angle, bk_col, fg_col)
+    transform = mktr(tx, ty)
+    return new_rect((iw, ih), w, h, transform, angle, bk_col, fg_col)
 
 
 def random_tri():
@@ -26,7 +27,8 @@ def random_tri():
     angle = random.randint(0, 120)
     bk_col = random_color()
     fg_col = random_color()
-    return new_tri((iw, ih), w, (tx, ty), angle, bk_col, fg_col)
+    transform = mktr(tx, ty)
+    return new_tri((iw, ih), w, transform, angle, bk_col, fg_col)
 
 
 if __name__ == '__main__':

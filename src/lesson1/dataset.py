@@ -60,7 +60,7 @@ def apply_pts(f, points2d):
     return [apply_pt(f, p2d) for p2d in points2d]
 
 
-def new_rect(res, w, h, tr, angle, bk_col, fg_col):
+def new_rect(res, w, h, transform, angle, bk_col, fg_col):
     w2 = w // 2
     h2 = h // 2
     p1 = (-w2, -h2)
@@ -70,7 +70,7 @@ def new_rect(res, w, h, tr, angle, bk_col, fg_col):
 
     original_rectangle = [p1, p2, p3, p4, p1]
 
-    tr = mktr(*tr) @ mkrot(np.deg2rad(angle))
+    tr = transform @ mkrot(np.deg2rad(angle))
     points = apply_pts(tr, original_rectangle)
 
     im = Image.new("RGB", res, bk_col)
@@ -84,7 +84,7 @@ def new_rect(res, w, h, tr, angle, bk_col, fg_col):
     return im
 
 
-def new_tri(res, w, tr, angle, bk_col, fg_col):
+def new_tri(res, w, transform, angle, bk_col, fg_col):
     h = w / 2 * np.sqrt(3)
     p1 = (-w / 2, h / 2)
     p2 = (w / 2, h / 2)
@@ -92,7 +92,7 @@ def new_tri(res, w, tr, angle, bk_col, fg_col):
 
     original_triangle = [p1, p2, p3, p1]
 
-    tr = mktr(*tr) @ mkrot(np.deg2rad(angle))
+    tr = transform @ mkrot(np.deg2rad(angle))
     points = apply_pts(tr, original_triangle)
 
     im = Image.new("RGB", res, bk_col)
