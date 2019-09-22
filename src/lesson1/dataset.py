@@ -8,8 +8,10 @@ from core import folders, delete_folder_recursively
 
 
 def archive(name):
-    with tarfile.open(folders / (name + '.tgz'), "w:gz") as tar:
-        tar.add(folders / name, arcname=name)
+    archive_path = folders.data / (name + '.tgz')
+    with tarfile.open(archive_path, "w:gz") as tar:
+        tar.add(folders.data / name, arcname=name)
+    print(f'generated archive {str(archive_path)}')
 
 
 def generate(name, tri, rect):
@@ -31,6 +33,8 @@ def generate(name, tri, rect):
 
     generate_class('tri', tri)
     generate_class('rect', rect)
+
+    archive(name)
 
 
 def mktr(x, y):

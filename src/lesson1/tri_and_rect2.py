@@ -32,4 +32,5 @@ def random_tri():
 
 
 if __name__ == '__main__':
-    generate('tri_and_rect', random_tri, random_rect)
+    random.seed(42)
+    random_tri().show()

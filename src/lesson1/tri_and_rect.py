@@ -1,6 +1,6 @@
 import random
 
-from lesson1.dataset import random_color, new_rect, new_tri, mktr
+from lesson1.dataset import random_color, new_rect, new_tri, mktr, archive
 from lesson1.dataset import generate
 
 
