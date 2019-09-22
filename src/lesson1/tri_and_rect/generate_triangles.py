@@ -4,6 +4,8 @@ from pathlib import Path
 import numpy as np
 from PIL import Image, ImageDraw
 
+from lesson1 import archive
+
 
 def mktr(x, y):
     return np.array([[1, 0, x],
@@ -89,6 +91,7 @@ def create_triangle_folder(folder, n):
         im.save(f.joinpath(f'{i}.png'))
 
 
-create_triangle_folder('tri_and_rect/train/tri', n=3000)
-create_triangle_folder('tri_and_rect/valid/tri', n=600)
-create_triangle_folder('tri_and_rect/test/tri', n=300)
+create_triangle_folder('../data/tri_and_rect/train/tri', n=3000)
+create_triangle_folder('../data/tri_and_rect/valid/tri', n=600)
+create_triangle_folder('../data/tri_and_rect/test/tri', n=300)
+archive.create()

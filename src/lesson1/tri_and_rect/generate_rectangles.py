@@ -4,6 +4,9 @@ import numpy as np
 import random
 from PIL import Image, ImageDraw
 
+from core import folders
+from lesson1 import archive
+
 
 def mktr(x, y):
     return np.array([[1, 0, x],
@@ -82,7 +85,12 @@ def create_folder(folder, n):
         im.save(f.joinpath(f'{i}.png'))
 
 
-# new_rect(*(random_rect())).show()
-create_folder('tri_and_rect/train/rect', n=3000)
-create_folder('tri_and_rect/valid/rect', n=600)
-create_folder('tri_and_rect/test/rect', n=300)
+new_rect(*(random_rect())).show()
+
+name = 'tri_and_rect'
+base = folders.data / name
+create_folder(base / 'train/rect', n=3000)
+create_folder(base / 'valid/rect', n=600)
+create_folder(base / 'test/rect', n=300)
+
+archive.create(name)
