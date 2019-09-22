@@ -7,34 +7,29 @@ from PIL import Image, ImageDraw
 from core import folders, delete_folder_recursively
 
 
-def archive(name):
-    archive_path = folders.data / (name + '.tgz')
+def archive(archive_name):
+    archive_path = folders.data / (archive_name + '.tgz')
     with tarfile.open(archive_path, "w:gz") as tar:
-        tar.add(folders.data / name, arcname=name)
+        tar.add(folders.data / archive_name, arcname=archive_name)
     print(f'generated archive {str(archive_path)}')
 
 
-def generate(name, tri, rect):
-    delete_folder_recursively(folders.data / name)
+def generate_class(archive_name, class_name, class_gen):
+    sets = [('train', 300), ('valid', 60), ('test', 30)]
+    for set_name, _ in sets:
+        delete_folder_recursively(folders.data / archive_name / set_name)
 
-    def generate_class(class_name, gen):
-        def generate_set(set_name, n):
-            f = folders.data / name / set_name / class_name
-            f.mkdir(parents=True, exist_ok=True)
+    def generate_set(set_name, n):
+        f = folders.data / archive_name / set_name / class_name
+        f.mkdir(parents=True, exist_ok=True)
 
-            for i in range(1, n + 1):
-                print(str(f), i)
-                im = gen()
-                im.save(f / f'{i}.png')
+        for i in range(1, n + 1):
+            print(str(f), i)
+            im = class_gen()
+            im.save(f / f'{i}.png')
 
-        generate_set('train', 300)
-        generate_set('valid', 60)
-        generate_set('test', 30)
-
-    generate_class('tri', tri)
-    generate_class('rect', rect)
-
-    archive(name)
+    for set_name, n in sets:
+        generate_set(set_name, n)
 
 
 def mktr(x, y):
@@ -64,7 +59,9 @@ def apply_pts(f, points2d):
     return [apply_pt(f, p2d) for p2d in points2d]
 
 
-def new_rect(res, w, h, transform, angle, bk_col, fg_col):
+def new_rect(res, w, h, transform, angle, bk_col=None, fg_col=None):
+    if not bk_col: bk_col = random_color()
+    if not fg_col: fg_col = random_color()
     w2 = w // 2
     h2 = h // 2
     p1 = (-w2, -h2)
@@ -88,11 +85,9 @@ def new_rect(res, w, h, transform, angle, bk_col, fg_col):
     return im
 
 
-def new_tri(res, w, transform, angle, bk_col, fg_col):
-    h = w / 2 * np.sqrt(3)
-    p1 = (-w / 2, h / 2)
-    p2 = (w / 2, h / 2)
-    p3 = (0, -h / 2)
+def new_tri(res, p1, p2, p3, transform, angle, bk_col=None, fg_col=None):
+    if not bk_col: bk_col = random_color()
+    if not fg_col: fg_col = random_color()
 
     original_triangle = [p1, p2, p3, p1]
 

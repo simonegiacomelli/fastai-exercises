@@ -1,7 +1,8 @@
 import random
 
 from lesson1.dataset import random_color, new_rect, new_tri, mktr, archive
-from lesson1.dataset import generate
+from lesson1.dataset import generate_class
+import numpy as np
 
 
 def random_rect():
@@ -25,11 +26,12 @@ def random_tri():
     tx = random.randint(w, iw - w)
     ty = random.randint(w, ih - w)
     angle = random.randint(0, 120)
-    bk_col = random_color()
-    fg_col = random_color()
     transform = mktr(tx, ty)
-    return new_tri((iw, ih), w, transform, angle, bk_col, fg_col)
-
+    h = w / 2 * np.sqrt(3)
+    p1 = (-w / 2, h / 2)
+    p2 = (w / 2, h / 2)
+    p3 = (0, -h / 2)
+    return new_tri((iw, ih), p1, p2, p3, transform, angle)
 
 if __name__ == '__main__':
-    generate('tri_and_rect', random_tri, random_rect)
+    generate_class('tri_and_rect', random_tri, random_rect)
