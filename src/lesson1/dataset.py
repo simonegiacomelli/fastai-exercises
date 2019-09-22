@@ -17,7 +17,7 @@ def archive(archive_name):
 def generate_class(archive_name, class_name, class_gen):
     sets = [('train', 300), ('valid', 60), ('test', 30)]
     for set_name, _ in sets:
-        delete_folder_recursively(folders.data / archive_name / set_name)
+        delete_folder_recursively(folders.data / archive_name / set_name / class_name)
 
     def generate_set(set_name, n):
         f = folders.data / archive_name / set_name / class_name
