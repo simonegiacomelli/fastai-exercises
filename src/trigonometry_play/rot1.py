@@ -2,7 +2,7 @@ from functools import partial
 
 from PIL import Image, ImageDraw
 import numpy as np
-from lesson1.dataset import apply_pt, mktr, mkrot
+from lesson1.dataset import apply_pt, mktr, mkrot, apply_pts
 
 import matplotlib.pyplot as plt
 
@@ -56,6 +56,19 @@ class Rot1:
         an2('a', a)
 
 
+def distance_point_segment(a, b, p):
+    tr_a = mktr(-a[0], -a[1])
+    b2 = apply_pt(tr_a, b)
+    alpha = np.arctan2(*(b2[::-1]))
+    p2 = apply_pt(mkrot(-alpha) @ tr_a, p)
+    return p2[1]
+
+
 # Rot1().calc2((3, -1), (3, -4), (1, -2))
-Rot1().calc((3, -1), (3, -4), (1, -2))
+a = (3, -1)
+b = (3, -4)
+p = (1, -2)
+
+print(f'dist point to segment {distance_point_segment(a, b, p)}')
+Rot1().calc(a, b, p)
 plt.show()
