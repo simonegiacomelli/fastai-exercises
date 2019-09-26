@@ -48,15 +48,15 @@ def random_color():
     return tuple([random.randint(0, 255) for _ in range(3)])
 
 
-def apply_pt(f, point2d):
+def apply_pt(tr, point2d):
     p3d = np.array([[point2d[0], point2d[1], 1]]).T
-    t = f @ p3d
+    t = tr @ p3d
     p = (t[0][0], t[1][0])
     return p
 
 
-def apply_pts(f, points2d):
-    return [apply_pt(f, p2d) for p2d in points2d]
+def apply_pts(tr, points2d):
+    return [apply_pt(tr, p2d) for p2d in points2d]
 
 
 def new_rect(res, w, h, transform, angle, bk_col=None, fg_col=None):
